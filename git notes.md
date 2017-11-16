@@ -6,6 +6,19 @@ git config --global user.name "your name here"
 git config --global user.email "your email here"
 git config --global color.ui true
 
+## GETTING STARTED
+### Create a new repository on the command line
+- echo "# NAV_from_scratch" >> README.md
+- git init
+- git add README.md
+- git commit -m "first commit"
+- git remote add origin https://github.com/vaughtdavid/NAV_from_scratch.git
+- git push -u origin master
+
+### …or push an existing repository from the command line
+- git remote add origin https://github.com/vaughtdavid/NAV_from_scratch.git
+- git push -u origin master
+
 
 ## COMMANDS
 - git init 	
