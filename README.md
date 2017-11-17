@@ -97,6 +97,6 @@ The data is...
 1980-12-15        27.38             27.38             27.25             27.25             785200            0                 1                 0.40256306006259  0.40256306006259  0.40065169418209  0.40065169418209  43971200          
 1980-12-12        28.75             28.87             28.75             28.75             2093900           0                 1                 0.42270591588018  0.42447025361603  0.42270591588018  0.42270591588018  117258400   
 ```	
-**That's staggering. All this data, for free, since 12/12/1980, available through a public API. Awesome.**
+**That's staggering. All this data, since 12/12/1980, available through a public API, for free. Awesome.**
 
 ## CONCLUSION
