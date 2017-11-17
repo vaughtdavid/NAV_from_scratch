@@ -6,9 +6,7 @@ require("/Users/vaughtdavid/Sites/VCM/13_NAV_from_scratch/resources/php-quandl-m
 require("/Users/vaughtdavid/Sites/VCM/13_NAV_from_scratch/resources/php-quandl-master/examples.php");
 require("/Users/vaughtdavid/Sites/VCM/13_NAV_from_scratch/resources/additional_helper_functions.php");
 require("/Users/vaughtdavid/Sites/VCM/13_NAV_from_scratch/resources/mysql_functions.php");
-
-## LIGHT SWITCHES
-$debug = false;
+require("/Users/vaughtdavid/Sites/VCM/13_NAV_from_scratch/resources/globals.php");
 
 ## GET QUANDL API KEY FROM STDIN
 if (defined('STDIN')) {
@@ -18,11 +16,6 @@ if (defined('STDIN')) {
   throw new Exception("No user input received. Need API Key and Stock Symbol as arguments.", 1);
 }
 
-## GLOBAL VARUABLES
-$host = "localhost";
-$username = "root";
-$password = "root";
-$database = "NAV_from_scratch";
 
 // https://github.com/DannyBen/php-quandl
 function main() {
@@ -44,7 +37,14 @@ function main() {
 	if($debug){ print_r("\n\nThe headers are...\n"); }
 	if($debug){ print_r(($php_std_obj->dataset)->column_names); }
 	$headers = ($php_std_obj->dataset)->column_names;
+	### Clean up the headers for SQL.
 	array_push($headers, "symbol");
+	foreach ($headers as $i => $value) {
+		$value = strtolower($value);
+		$value = str_replace(" ","_",$value);
+		$value = str_replace(".", "", $value);
+		$headers[$i] = $value;
+	}
 
 	## THE RECORDS...
 	if($debug){ print_r("\n\nThe data is...\n"); }
@@ -52,18 +52,19 @@ function main() {
 	$records = ($php_std_obj->dataset)->data;
 	
 	foreach ($records as $record) {
-	     array_push($record, $symbol);
-	     $sql = Query_Builder_INSERT_INTO_Quotes ($header, $record);
-	     $result = $conn->query($sql);
-	     if ($result == FALSE) {
-	           # Copy record to the reject list in the output file. 
-	           print_r($record);
-	     } else {
-	           # Continue. 
-	     }
+		array_push($record, $symbol);
+	    $sql = Query_Builder_INSERT_INTO_Quotes ($headers, $record);
+     	if (($conn->query($sql)) == FALSE) {
+     		# Copy record to the reject list in the output file. 
+     		print_r("\n");
+     		print_r($sql);
+     	} else {
+     		# Continue. 
+     	}
 	}
-
-
+	
+print_r("\n");
+# Close Main	
 }
 
 
