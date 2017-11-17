@@ -39,8 +39,12 @@ function CREATE_Quotes_TABLE($conn, $table_name) {
 }
 
 
-function Query_Builder_INSERT_INTO_Quotes ($acct_num, $data_array) {
-	$beginning = "INSERT INTO `Statements_".$acct_num."` (\n\t`id`,\n\t";
+function Query_Builder_INSERT_INTO_Quotes ($header, $record) {
+	# ZIPPER FUNCTION
+	$data_array = array_combine($headers, $record);
+	
+	
+	$beginning = "INSERT INTO `quotes` (\n\t`id`,\n\t";
 
 	$headers = "`";
 	$values = "'";
@@ -48,7 +52,7 @@ function Query_Builder_INSERT_INTO_Quotes ($acct_num, $data_array) {
 		$headers .= $key;
 		$headers .= "`,\n\t`";
 
-		$values .= _3_helper___Arr_Get($data_array,$key);
+		$values .= Arr_Get($data_array,$key);
 		$values .= "',\n\t'";
 	}
 	#remove comma after last header (one, two, three, ) -> (one, two, three)

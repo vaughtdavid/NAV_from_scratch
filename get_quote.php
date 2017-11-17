@@ -44,13 +44,24 @@ function main() {
 	if($debug){ print_r("\n\nThe headers are...\n"); }
 	if($debug){ print_r(($php_std_obj->dataset)->column_names); }
 	$headers = ($php_std_obj->dataset)->column_names;
+	array_push($headers, "symbol");
 
 	## THE RECORDS...
 	if($debug){ print_r("\n\nThe data is...\n"); }
 	if($debug){ print_r(_2d_array_print(($php_std_obj->dataset)->data)); }
-	$records = _2d_array_print(($php_std_obj->dataset)->data);
-
-
+	$records = ($php_std_obj->dataset)->data;
+	
+	foreach ($records as $record) {
+	     array_push($record, $symbol);
+	     $sql = Query_Builder_INSERT_INTO_Quotes ($header, $record);
+	     $result = $conn->query($sql);
+	     if ($result == FALSE) {
+	           # Copy record to the reject list in the output file. 
+	           print_r($record);
+	     } else {
+	           # Continue. 
+	     }
+	}
 
 
 }
