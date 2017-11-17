@@ -19,7 +19,7 @@ if (defined('STDIN')) {
 
 
 // https://github.com/DannyBen/php-quandl
-function get_quote_quandl($symbol) {
+function get_historical_prices($symbol) {
 	
 	# SETUP
 	global $api_key, $debug, $host, $username, $password, $database;
@@ -72,5 +72,5 @@ print_r("\n");
 
 
 
-get_quote_quandl($symbol);
+get_historical_prices($symbol);
 ?>
