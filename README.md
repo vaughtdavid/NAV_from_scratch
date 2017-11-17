@@ -99,4 +99,10 @@ The data is...
 ```	
 **That's staggering. All this data, since 12/12/1980, available through a public API, for free. Awesome.**
 
-## CONCLUSION
+## GET HISTORICAL PRICES WORKING
+the function **get_historical_prices()** works, but only for US stocks, other stocks, like BZUN, BRK_B, ANET, to name a few, are not available to my API key. They throw the following error:
+
+```
+{"quandl_error":{"code":"QEPx04","message":"You do not have permission to view this dataset. Please subscribe to this database to get access."}}
+```
+I emailed support about the problem. We'll see what happens.
