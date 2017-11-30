@@ -28,6 +28,7 @@ git config --global color.ui true
 	- *git clone git://github.com/vaughtdavid/Hello-World.git*
 - git pull	
 	- To make sure you have the latest version of the repository (if you cloned from a remote, upstream location)
+	- *git pull origin quandl*
 - edit the files..
 - git add		
 	- After adding new files or making changes to existing ones, add your changes.
@@ -41,6 +42,8 @@ git config --global color.ui true
 	- Send your changes to a remote location, such as GitHub.
 - git st		
 	- status
+- git checkout -- .
+	- Discard uncomitted changes. 
 
 ## ADDITIONAL NOTES
 - git branch blue			
