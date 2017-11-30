@@ -45,7 +45,7 @@ git config --global color.ui true
 - git checkout -- .
 	- Discard uncomitted changes. 
 
-## ADDITIONAL NOTES
+## BRANCHES
 - git branch blue			
 	- make branch blue
 - git checkout blue		
@@ -61,6 +61,9 @@ git config --global color.ui true
 	- git lg1
 	- git lg2
 	- git lg3
+
+## STASHING UNCHANGED WORK
+- See [this tutorial](https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning#_git_stashing) for notes on stashing and cleaning the workspace.
 
 ## MERGING MULTIPLE BRANCHES
 ### Check out [this tutorial](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)!
