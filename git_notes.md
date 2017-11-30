@@ -56,7 +56,14 @@ git config --global color.ui true
 - git branch
 	- shows current branch
 
+## GRAPHING BRANCHES
+- Aliases stolen from [this StackOverflow answer](https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs).
+	- git lg1
+	- git lg2
+	- git lg3
+
 ## MERGING MULTIPLE BRANCHES
+### Check out [this tutorial](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)!
 - git checkout master
 - git merge email
 - git merge blue
