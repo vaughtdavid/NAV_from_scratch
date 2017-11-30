@@ -34,6 +34,13 @@ function getStockQuantity($symbol,$the_date) {
 	}	
 }#RETURN: 50 (stocks)
 
+function getStockQuantities($symbol,$date_list) {
+	foreach ($date_list as $i => $current_date) {
+		$result_list[$current_date] = getStockQuantity($symbol,$current_date);
+	}
+	return $result_list;
+}#RETURN: ["1.Jan.17"=>"50", "2.Jan.17"=>"50", ... "31.Jan.17"=>"100"]
+
 function getStockPrice($symbol,$the_date) {
 	$sql = "FROM `Quotes` q select q.close where q.date = ".$the_date." and q.symbol = ".$symbol.";";
 	$result['price'] = $conn->query($sql);
@@ -56,9 +63,9 @@ function getValueofPosition($symbol,$the_date) {
 }#RETURN: $75.00 (position value)
 
 
-function getChangeinValue($symbol,$cb_date,$final_date) {
-	$result['initial'] = getValueofPosition($symbol,$cb_date);
-	$result['final'] = getValueofPosition($symbol,$the_date);
+function getChangeinValue($symbol,$initial_date,$final_date) {
+	$result['initial'] = getValueofPosition($symbol,$initial_date);
+	$result['final'] = getValueofPosition($symbol,$final_date);
 	$result['diff'] = $result['final'] - $result['initial'];
 	if ($result['diff']) {
 		return $result['diff'];
@@ -71,27 +78,33 @@ function getDayChanges($symbol,$date_list) {
 	$last_date = $date_list[0];
 	foreach ($date_list as $i => $current_date) {
 		$result_list[$current_date] = getChangeinValue($symbol,$last_date,$current_date);
+		$last_date = $current_date;
 	}
+	#Set Cost Basis
+	$result_list[$date_list[0]] = getStockPrice($symbol,$date_list[0]);
+	
 	return $result_list;
-}#RETURN: ["1.Jan.17"=>"0", "2.Jan.17"=>".02", "3.Jan.17"=>".01", "4.Jan.17"=>".02"]
+}#RETURN: ["1.Jan.17"=>"$5.00", "2.Jan.17"=>".02", "3.Jan.17"=>".01", "4.Jan.17"=>".02"]
 
-function getAllDayChanges($stock_list,$date_list) {
+function getSimpleCostBasis($stock_list,$date_list) {
 	foreach ($stock_list as $i => $symbol) {
 		$result[$symbol] = getDayChanges($symbol,$date_list);
 	}
 	return $result;
-}#RETURN: ['GOOG' => ["1.Jan.17"=>"0",  "2.Jan.17"=>".06", "3.Jan.17"=>".01"],
- #         'AMZN' => ["10.Feb.17"=>"0",  "11.Feb.17"=>".01", "12.Feb.17"=>".02"]]
+}#RETURN: ['GOOG' => ["1.Jan.17"=>"5.00",  "2.Jan.17"=>".06", "3.Jan.17"=>".01"],
+ #         'AMZN' => ["10.Feb.17"=>"10.00",  "11.Feb.17"=>".10", "12.Feb.17"=>".12"]]
 
-
-function getPorfolioQuantites($stock_list,$the_date) {
+function getAllStockQuantities($stock_list,$date_list) {
 	foreach ($stock_list as $i => $symbol) {
-		$result['$symbol'] = getStockQuantity($symbol,$the_date);
+		$result[$symbol] = getStockQuantities($symbol,$date_list);
 	}
 	return $$result;
+}#RETURN: ['GOOG' => ["1.Jan.17"=>"50",  "2.Jan.17"=>"50", "3.Jan.17"=>"75"],
+ #         'AMZN' => ["10.Feb.17"=>"20",  "11.Feb.17"=>"15", "12.Feb.17"=>"15"]]
+
+function getAllStockValues() {
+
 }
-
-
 
 function getPortfolioValue($stock_list,$the_date) {
 	$sum__qty_price = 0;
